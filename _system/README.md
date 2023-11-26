@@ -18,6 +18,8 @@ else if(condition) {
 
 # Publishing to NPM:
 
+Bump the version to a new version not published to NPM. Then:
+
 npm run build
 cd dist
 npm publish --access public
