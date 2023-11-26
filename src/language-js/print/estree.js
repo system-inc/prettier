@@ -388,9 +388,11 @@ function printEstree(path, options, print, args) {
             node.consequent,
             CommentCheckFlags.Trailing | CommentCheckFlags.Line,
           ) || needsHardlineAfterDanglingComment(node);
-        const elseOnSameLine =
-          node.consequent.type === "BlockStatement" && !commentOnOwnLine;
-        parts.push(elseOnSameLine ? " " : hardline);
+
+        // Always use a hardline for else statements
+        // const elseOnSameLine = node.consequent.type === "BlockStatement" && !commentOnOwnLine;
+        // parts.push(elseOnSameLine ? " " : hardline);
+        parts.push(hardline);
 
         if (hasComment(node, CommentCheckFlags.Dangling)) {
           parts.push(
@@ -400,7 +402,6 @@ function printEstree(path, options, print, args) {
         }
 
         parts.push(
-          hardline, // Consequent has a hardline
           "else",
           group(
             adjustClause(
