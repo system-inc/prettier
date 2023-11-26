@@ -20,4 +20,4 @@ else if(condition) {
 
 npm run build
 cd dist
-npm publish
+npm publish --access public
