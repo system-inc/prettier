@@ -366,7 +366,7 @@ function printEstree(path, options, print, args) {
     }
     case "WithStatement":
       return group([
-        "with (",
+        "with(",
         print("object"),
         ")",
         adjustClause(node.body, print("body")),
@@ -374,7 +374,7 @@ function printEstree(path, options, print, args) {
     case "IfStatement": {
       const con = adjustClause(node.consequent, print("consequent"));
       const opening = group([
-        "if (",
+        "if(",
         group([indent([softline, print("test")]), softline]),
         ")",
         con,
@@ -400,6 +400,7 @@ function printEstree(path, options, print, args) {
         }
 
         parts.push(
+          hardline, // Consequent has a hardline
           "else",
           group(
             adjustClause(
@@ -429,7 +430,7 @@ function printEstree(path, options, print, args) {
       return [
         printedComments,
         group([
-          "for (",
+          "for(",
           group([
             indent([
               softline,
@@ -450,14 +451,14 @@ function printEstree(path, options, print, args) {
     }
     case "WhileStatement":
       return group([
-        "while (",
+        "while(",
         group([indent([softline, print("test")]), softline]),
         ")",
         adjustClause(node.body, print("body")),
       ]);
     case "ForInStatement":
       return group([
-        "for (",
+        "for(",
         print("left"),
         " in ",
         print("right"),
@@ -469,7 +470,7 @@ function printEstree(path, options, print, args) {
       return group([
         "for",
         node.await ? " await" : "",
-        " (",
+        "(",
         print("left"),
         " of ",
         print("right"),
@@ -488,7 +489,7 @@ function printEstree(path, options, print, args) {
         parts.push(hardline);
       }
       parts.push(
-        "while (",
+        "while(",
         group([indent([softline, print("test")]), softline]),
         ")",
         semi,
@@ -538,7 +539,8 @@ function printEstree(path, options, print, args) {
         const param = print("param");
 
         return [
-          "catch ",
+          hardline, // catch clause starts with a newline
+          "catch",
           parameterHasComments
             ? ["(", indent([softline, param]), softline, ") "]
             : ["(", param, ") "],
@@ -551,7 +553,7 @@ function printEstree(path, options, print, args) {
     case "SwitchStatement":
       return [
         group([
-          "switch (",
+          "switch(",
           indent([softline, print("discriminant")]),
           softline,
           ")",
